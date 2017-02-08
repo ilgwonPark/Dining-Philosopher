@@ -1,8 +1,10 @@
 
+// Miscellaneous definitions for the Dining Philosophers            
+// Lab06 (from ece.gatech.edu)
 import java.lang.Thread;
 import java.util.Random;
 
-class miscsubs {
+class miscsubs2 {
 	static int NUMBER_PHILOSOPHERS = 5;
 	static int NUMBER_CHOPSTICKS = 5;
 	static int MAX_EATS = 500;
@@ -10,7 +12,6 @@ class miscsubs {
 	static int EatCount[] = new int[NUMBER_PHILOSOPHERS];
 	static boolean EatingLog[] = new boolean[NUMBER_PHILOSOPHERS];
 	static int StarveCount[] = new int[NUMBER_PHILOSOPHERS];
-
 	static Random r;
 
 	static void InitializeChecking() {
@@ -22,7 +23,8 @@ class miscsubs {
 
 	static synchronized void StartEating(int MyIndex) {
 		// Un-comment below for debugging..
-		System.out.println("Philosopher " + MyIndex + " Eating");
+
+		System.out.println("Philosopher " + MyIndex + " Eating " + TotalEats);
 		TotalEats++;
 		EatCount[MyIndex]++;
 		EatingLog[MyIndex] = true;
@@ -37,12 +39,12 @@ class miscsubs {
 		int LeftNeighbor = (MyIndex == 0) ? NUMBER_PHILOSOPHERS - 1 : MyIndex - 1;
 		int RightNeighbor = (MyIndex + 1) % NUMBER_PHILOSOPHERS;
 		// At no time can any be eating at the same time as neighbors */
+
 		if (EatingLog[LeftNeighbor] || EatingLog[RightNeighbor]) {
 			System.out.println("ERROR! Philosopher " + MyIndex + " eating incorrectly");
 		}
 
 		for (int i = 0; i < NUMBER_PHILOSOPHERS; i++) {
-
 			if (StarveCount[i] > 19) {
 				System.out.println("philosopher " + i + " has been starving at least 20 times..exiting..");
 				LogResults();
